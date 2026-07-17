@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: springboot-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned-cluster-issuer
+
+spec:
+  ingressClassName: nginx
+
+  tls:
+  - hosts:
+      - spring.local
+    secretName: springboot-tls
+
+  rules:
+  - host: spring.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: backend
+            port:
+              number: 8081
