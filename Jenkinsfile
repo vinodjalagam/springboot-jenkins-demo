@@ -53,7 +53,7 @@ pipeline {
 
             post {
                 always {
-                    junit 'server/target/surefire-reports/*.xml'
+                    junit 'backend/target/surefire-reports/*.xml'
                 }
             }
         }
@@ -214,7 +214,7 @@ pipeline {
     post {
 
         always {
-            archiveArtifacts artifacts: 'server/target/*.jar'
+            archiveArtifacts artifacts: 'backend/target/*.jar'
             archiveArtifacts artifacts: 'reports/*.html', fingerprint: true
                     
             emailext(
