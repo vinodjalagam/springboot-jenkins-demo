@@ -223,7 +223,7 @@ pipeline {
                         kubectl get nodes
                         helm version
         
-                        helm upgrade --install springboot ./helm/spring-boot \
+                        helm upgrade --install springboot ./helm/backend \
                           --set image.repository=$IMAGE_REPOSITORY \
                           --set image.tag=$IMAGE_TAG
                     '''
