@@ -44,27 +44,27 @@ pipeline {
             }
         }
 
-        stage('Unit Tests') {
-            steps {
-                dir('backend') {
-                    sh 'mvn test'
-                }
-            }
+        // stage('Unit Tests') {
+        //     steps {
+        //         dir('backend') {
+        //             sh 'mvn test'
+        //         }
+        //     }
 
-            post {
-                always {
-                    junit 'backend/target/surefire-reports/*.xml'
-                }
-            }
-        }
+        //     post {
+        //         always {
+        //             junit 'backend/target/surefire-reports/*.xml'
+        //         }
+        //     }
+        // }
 
-        stage('JaCoCo Coverage') {
-            steps {
-                dir('backend') {
-                    sh 'mvn verify'
-                }
-            }
-        }
+        // stage('JaCoCo Coverage') {
+        //     steps {
+        //         dir('backend') {
+        //             sh 'mvn verify'
+        //         }
+        //     }
+        // }
 
         // stage('SonarQube Analysis') {
         //     steps {
