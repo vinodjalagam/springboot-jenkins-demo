@@ -195,6 +195,15 @@ pipeline {
                 sh 'docker push $IMAGE'
             }
         }
+        stage('Deploy MySQL') {
+            steps {
+                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
+                    sh '''
+                        helm upgrade --install mysql ./helm/mysql
+                    '''
+                }
+            }
+        }
         stage('Deploy to Kubernetes') {
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
