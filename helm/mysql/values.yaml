@@ -169,7 +169,7 @@ mysql:
   rootPassword: ""
   database: employee_db
   username: spring
-  password: "
+  password: ""
 
 # livenessProbe:
 #   initialDelaySeconds: 30
@@ -177,4 +177,4 @@ mysql:
 
 # readinessProbe:
 #   initialDelaySeconds: 10
-  periodSeconds: 5
+#  periodSeconds: 5
