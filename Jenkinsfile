@@ -196,6 +196,27 @@ pipeline {
                 sh 'docker push $IMAGE'
             }
         }
+        // stage('Deploy MySQL') {
+        //     steps {
+        //         withCredentials([
+        //             file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG'),
+        //             string(credentialsId: 'mysql-root-password', variable: 'MYSQL_ROOT_PASSWORD'),
+        //             string(credentialsId: 'mysql-password', variable: 'MYSQL_PASSWORD')
+        //         ]) {
+        //             sh '''
+        //                 helm upgrade --install mysql ./helm/mysql \
+        //                   --set image.repository=mysql \
+        //                   --set image.tag=8.4 \
+        //                   --set mysql.database=employee_db \
+        //                   --set mysql.username=spring \
+        //                   --set mysql.password=$MYSQL_PASSWORD \
+        //                   --set mysql.rootPassword=$MYSQL_ROOT_PASSWORD
+        
+        //                 kubectl rollout status deployment/mysql --timeout=180s
+        //             '''
+        //         }
+        //     }
+        // }
         stage('Deploy MySQL') {
             steps {
                 withCredentials([
@@ -205,14 +226,10 @@ pipeline {
                 ]) {
                     sh '''
                         helm upgrade --install mysql ./helm/mysql \
-                          --set image.repository=mysql \
-                          --set image.tag=8.4 \
-                          --set mysql.database=employee_db \
-                          --set mysql.username=spring \
-                          --set mysql.password=$MYSQL_PASSWORD \
-                          --set mysql.rootPassword=$MYSQL_ROOT_PASSWORD
-        
-                        kubectl rollout status deployment/mysql --timeout=180s
+                          --set mysql.rootPassword="$MYSQL_ROOT_PASSWORD" \
+                          --set mysql.password="$MYSQL_PASSWORD" \
+                          --wait \
+                          --timeout 5m
                     '''
                 }
             }
