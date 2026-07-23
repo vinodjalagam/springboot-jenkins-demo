@@ -169,4 +169,4 @@ database:
   port: 3306
   name: employee_db
   username: spring
-  password: spring123
+  password: ""
