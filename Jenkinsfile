@@ -66,21 +66,21 @@ pipeline {
         //     }
         // }
 
-        stage('SonarQube Analysis') {
-            steps {
-                dir('backend') {
+        // stage('SonarQube Analysis') {
+        //     steps {
+        //         dir('backend') {
 
-                    withSonarQubeEnv('sonarqube') {
+        //             withSonarQubeEnv('sonarqube') {
 
-                        sh '''
-                        mvn sonar:sonar \
-                        -Dsonar.projectKey=maven-project \
-                        -Dsonar.projectName=maven-project
-                        '''
-                    }
-                }
-            }
-        }
+        //                 sh '''
+        //                 mvn sonar:sonar \
+        //                 -Dsonar.projectKey=maven-project \
+        //                 -Dsonar.projectName=maven-project
+        //                 '''
+        //             }
+        //         }
+        //     }
+        // }
 
         // stage('Quality Gate') {
         //     steps {
