@@ -1,0 +1,70 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springbootdemo
+  labels:
+    app: springbootdemo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: springbootdemo
+  template:
+    metadata:
+      labels:
+        app: springbootdemo
+    spec:
+      containers:
+        - name: spring
+          image: vinodjalagam/spring:23072026
+          ports:
+            - containerPort: 8081
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: DB_HOST
+
+            - name: DB_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: DB_PORT
+
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap
+                  key: DB_NAME
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_USER
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-secret
+                  key: MYSQL_PASSWORD
+          # resources:
+          #   requests:
+          #     cpu: "100m"
+          #     memory: "128Mi"
+          #   limits:
+          #     cpu: "500m"
+          #     memory: "512Mi"
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 60
+            periodSeconds: 10
+
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8081
+            initialDelaySeconds: 30
+            periodSeconds: 10
