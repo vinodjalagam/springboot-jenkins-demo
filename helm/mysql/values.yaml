@@ -165,3 +165,16 @@ persistence:
   enabled: true
   size: 2Gi
 
+mysql:
+  rootPassword: root123
+  database: employee_db
+  username: spring
+  password: spring123
+
+livenessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+
+readinessProbe:
+  initialDelaySeconds: 10
+  periodSeconds: 5
