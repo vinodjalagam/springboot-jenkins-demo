@@ -144,38 +144,38 @@ pipeline {
         //         '''
         //     }
         // }
-        stage('Trivy Image Scan') {
-            steps {
-                sh '''
-                    mkdir -p ${WORKSPACE}/reports
-                    mkdir -p ~/.trivy
+        // stage('Trivy Image Scan') {
+        //     steps {
+        //         sh '''
+        //             mkdir -p ${WORKSPACE}/reports
+        //             mkdir -p ~/.trivy
         
-                    # Download HTML template if it doesn't exist
-                    if [ ! -f ~/.trivy/html.tpl ]; then
-                        wget -q -O ~/.trivy/html.tpl \
-                        https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
-                    fi
+        //             # Download HTML template if it doesn't exist
+        //             if [ ! -f ~/.trivy/html.tpl ]; then
+        //                 wget -q -O ~/.trivy/html.tpl \
+        //                 https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
+        //             fi
 
-                    echo "Generating Full Trivy Report..."
+        //             echo "Generating Full Trivy Report..."
         
-                    # Scan the Docker image and generate HTML report
-                    trivy image \
-                        --format template \
-                        --template "@$HOME/.trivy/html.tpl" \
-                        -o ${WORKSPACE}/reports/trivy-image-report.html \
-                        $IMAGE
+        //             # Scan the Docker image and generate HTML report
+        //             trivy image \
+        //                 --format template \
+        //                 --template "@$HOME/.trivy/html.tpl" \
+        //                 -o ${WORKSPACE}/reports/trivy-image-report.html \
+        //                 $IMAGE
                         
-                    echo "Generating HIGH & CRITICAL Report..."
+        //             echo "Generating HIGH & CRITICAL Report..."
 
-                    trivy image \
-                        --severity HIGH,CRITICAL \
-                        --format template \
-                        --template "@$HOME/.trivy/html.tpl" \
-                        -o ${WORKSPACE}/reports/trivy-report-high-critical.html \
-                        $IMAGE
-                '''
-            }
-        }
+        //             trivy image \
+        //                 --severity HIGH,CRITICAL \
+        //                 --format template \
+        //                 --template "@$HOME/.trivy/html.tpl" \
+        //                 -o ${WORKSPACE}/reports/trivy-report-high-critical.html \
+        //                 $IMAGE
+        //         '''
+        //     }
+        // }
 
         stage('Docker Login') {
             steps {
