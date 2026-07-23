@@ -41,15 +41,11 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
 
-          env:
-            - name: SPRING_DATASOURCE_URL
-              value: "jdbc:mysql://{{ .Values.database.host }}:{{ .Values.database.port }}/{{ .Values.database.name }}"
-
-            - name: SPRING_DATASOURCE_USERNAME
-              value: "{{ .Values.database.username }}"
-
-            - name: SPRING_DATASOURCE_PASSWORD
-              value: "{{ .Values.database.password }}"
+          envFrom:
+            - configMapRef:
+                name: {{ include "backend.fullname" . }}-config
+            - secretRef:
+                name: {{ include "backend.fullname" . }}-secret
           ports:
             - name: http
               containerPort: {{ .Values.service.port }}
