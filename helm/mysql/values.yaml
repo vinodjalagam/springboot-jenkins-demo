@@ -166,10 +166,10 @@ persistence:
   size: 2Gi
 
 mysql:
-  rootPassword: root123
+  rootPassword: ""
   database: employee_db
   username: spring
-  password: spring123
+  password: "
 
 # livenessProbe:
 #   initialDelaySeconds: 30
